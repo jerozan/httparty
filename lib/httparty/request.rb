@@ -214,7 +214,7 @@ module HTTParty
         # If the caller specified a header of 'Accept-Encoding', assume they want to
         # deal with encoding of content. Disable the internal logic in Net:HTTP
         # that handles encoding, if the platform supports it.
-        if options[:decode_content_disabled] && @raw_request.respond_to?(:decode_content) && (headers_hash.key?('Accept-Encoding') || headers_hash.key?('accept-encoding'))
+        if !options[:enable_internal_encoding] && @raw_request.respond_to?(:decode_content) && (headers_hash.key?('Accept-Encoding') || headers_hash.key?('accept-encoding'))
           # Using the '[]=' sets decode_content to false
           @raw_request['accept-encoding'] = @raw_request['accept-encoding']
         end
