@@ -211,13 +211,6 @@ module HTTParty
         headers_hash = options[:headers].to_hash
 
         @raw_request.initialize_http_header(headers_hash)
-        # If the caller specified a header of 'Accept-Encoding', assume they want to
-        # deal with encoding of content. Disable the internal logic in Net:HTTP
-        # that handles encoding, if the platform supports it.
-        if @raw_request.respond_to?(:decode_content) && (headers_hash.key?('Accept-Encoding') || headers_hash.key?('accept-encoding'))
-          # Using the '[]=' sets decode_content to false
-          @raw_request['accept-encoding'] = @raw_request['accept-encoding']
-        end
       end
 
       if options[:body]
